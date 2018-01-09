@@ -1,6 +1,6 @@
 import os
 import sys
-import time
+import glob
 
 import webdav.client
 
@@ -26,7 +26,12 @@ if not client.check(work_dir):
     client.mkdir(work_dir)
 
 for path in sys.argv[1:]:
-    client.upload(
-        work_dir + "/" + os.path.basename(path),
-        path
-    )
+    if "*" in path:
+        paths = glob.glob(path)
+    else:
+        paths = [path]
+    for p in paths:
+        client.upload(
+            os.path.join(work_dir, os.path.basename(p)),
+            p
+        )
