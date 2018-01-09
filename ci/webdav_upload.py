@@ -16,26 +16,17 @@ if os.name == "nt":
 base_dir = "webdav_test"
 
 if "APPVEYOR_BUILD_NUMBER" in os.environ:
-    work_dir = os.path.join(
-        base_dir,
-        "appveyor_" + os.environ["APPVEYOR_BUILD_NUMBER"]
-    )
+    work_dir = base_dir + "/" + "appveyor_" + os.environ["APPVEYOR_BUILD_NUMBER"]
 elif "TRAVIS_BUILD_NUMBER" in os.environ:
-    work_dir = os.path.join(
-        base_dir,
-        "travis_" + os.environ["TRAVIS_BUILD_NUMBER"]
-    )
+    work_dir = base_dir + "/" + "travis_" + os.environ["TRAVIS_BUILD_NUMBER"]
 else:
-    work_dir = os.path.join(
-        base_dir,
-        "unknown"
-    )
+    work_dir = base_dir + "/" + "unknown"
 
 if not client.check(work_dir):
     client.mkdir(work_dir)
 
 for path in sys.argv[1:]:
     client.upload(
-        os.path.join(work_dir, os.path.basename(path)),
+        work_dir + "/" + os.path.basename(path),
         path
     )
