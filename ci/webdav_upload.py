@@ -10,8 +10,10 @@ client = webdav.client.Client({
     "webdav_password": os.environ["WEBDAV_PASSWORD"]
 })
 
-base_dir = "webdav_test"
+if os.name == "nt":
+    client.default_options["SSL_VERIFYPEER"] = 0
 
+base_dir = "webdav_test"
 
 if "APPVEYOR_BUILD_NUMBER" in os.environ:
     work_dir = os.path.join(
