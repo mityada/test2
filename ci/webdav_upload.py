@@ -12,10 +12,22 @@ client = webdav.client.Client({
 
 base_dir = "webdav_test"
 
-work_dir = os.path.join(
-    base_dir, 
-    os.environ.get("TRAVIS_BUILD_NUMBER", "")
-)
+
+if "APPVEYOR_BUILD_NUMBER" in os.environ:
+    work_dir = os.path.join(
+        base_dir,
+        "appveyor_" + os.environ["APPVEYOR_BUILD_NUMBER"]
+    )
+elif "TRAVIS_BUILD_NUMBER" in os.environ:
+    work_dir = os.path.join(
+        base_dir,
+        "travis_" + os.environ["TRAVIS_BUILD_NUMBER"]
+    )
+else:
+    work_dir = os.path.join(
+        base_dir,
+        "unknown"
+    )
 
 if not client.check(work_dir):
     client.mkdir(work_dir)
