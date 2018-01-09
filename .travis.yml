@@ -28,6 +28,16 @@ before_script: |
 
 matrix:
   include:
+    - os: osx
+      osx_image: xcode8.2
+      language: cpp
+      env: CB_BUILD_AGENT='clang-darwin-x86_64-release-cuda' CACHE_NAME=darwin
+      script: ~/build/${TRAVIS_REPO_SLUG}/ci/travis/script.sh
+    - os: osx
+      osx_image: xcode8.2
+      language: cpp
+      env: CB_BUILD_AGENT='python-darwin-x86_64-release' CACHE_NAME=darwin
+      script: ~/build/${TRAVIS_REPO_SLUG}/ci/travis/script.sh
     - os: linux
       dist: trusty
       language: cpp
