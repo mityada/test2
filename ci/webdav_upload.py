@@ -32,6 +32,6 @@ for path in sys.argv[1:]:
         paths = [path]
     for p in paths:
         client.upload(
-            work_dir + os.path.basename(p),
+            work_dir + "/" + os.path.basename(p),
             p
         )
